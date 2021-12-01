@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EmployeeHierarchyAssessment
+namespace EmpHierarchy
 {
-    public class Employees
+    public class Employee
     {
         private string emp_id, manager_id = "";
         private long emp_salary = 0;
@@ -36,7 +36,7 @@ namespace EmployeeHierarchyAssessment
 
         public override bool Equals(object obj)
         {
-            Employees emp1 = (Employees)obj;
+            Employee emp1 = (Employee)obj;
             return (emp1.Id.ToUpper().Equals(Id.ToUpper()));
         }
     }

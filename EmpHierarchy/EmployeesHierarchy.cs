@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using EmployeeHierarchyAssessment.ErrorHandling;
-namespace EmployeeHierarchyAssessment
+using EmpHierarchy.ErrorHandling;
+namespace EmpHierarchy
 {
-   public class Company
+    public class EmployeesHierarchy
     {
         readonly Dictionary<string, List<string>> OrdinaryEmp_list = new Dictionary<string, List<string>>();
-        private List<Employees> employee_list = new List<Employees>();
+        private List<Employee> employee_list = new List<Employee>();
 
-        public List<Employees> EmployeeList => employee_list;
+        public List<Employee> EmployeeList => employee_list;
 
         
         /// load data from csv file
-        public Company(String[] data)
+        public EmployeesHierarchy(String[] data)
         {
             ProcessData(data);
 
@@ -36,7 +35,7 @@ namespace EmployeeHierarchyAssessment
                 try
                 {
                     var parts = li.Split(',');
-                    var temp = new Employees();
+                    var temp = new Employee();
                     temp.Id = parts[0];
                     if (parts[1].Equals(""))
                     {
@@ -159,9 +158,9 @@ namespace EmployeeHierarchyAssessment
        
         /// Given an Id returns the employee details from the list
        
-        public Employees LookUp(string id)
+        public Employee LookUp(string id)
         {
-            foreach (Employees emp in EmployeeList)
+            foreach (Employee emp in EmployeeList)
             {
                 if (emp.Id.Equals(id))
                 {
@@ -171,7 +170,5 @@ namespace EmployeeHierarchyAssessment
 
             return null;
         }
-
-
     }
 }

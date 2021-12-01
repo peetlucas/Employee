@@ -2,19 +2,19 @@
 using System;
 using System.IO;
 //using Xunit;
-using EmployeeHierarchyAssessment;
+using EmpHierarchy;
 namespace UnitTestEmployeeHierarchy
 {
     [TestClass]
-    public class UnitTest1
+    public class EmployeesHierarchyUnitTest
     {
-        private Company company;
+        private EmployeesHierarchy empHierarchy;
 
         [TestInitialize]
         public void TestInitiliaze()
         {
             var data = GetData("../testcases/test1.csv");
-            company = new Company(data);
+            empHierarchy = new EmployeesHierarchy(data);
         }
 
         /// Test to check if the Employees are added to the graph
@@ -23,9 +23,9 @@ namespace UnitTestEmployeeHierarchy
         public void AddTest()
         {
 
-            Assert.IsTrue(company.EmployeeList.Contains(new Employees
+            Assert.IsTrue(empHierarchy.EmployeeList.Contains(new Employee
             { Id = "Employee2", ManagerId = "Employee1", Salary = 800 }));
-            Assert.IsTrue(company.EmployeeList.Contains(new Employees
+            Assert.IsTrue(empHierarchy.EmployeeList.Contains(new Employee
             { Id = "Employee4", ManagerId = "Employee2", Salary = 500 }));
         }
 
@@ -35,7 +35,7 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void SubOrdinate_Not_NULL()
         {
-            var subordinates = company.GetSubordinates("Employee2");
+            var subordinates = empHierarchy.GetSubordinates("Employee2");
             Assert.AreEqual(2, subordinates.Count);
         }
 
@@ -45,7 +45,7 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void Employee5_has_No_SubOrdinates_Test()
         {
-            var subordinates = company.GetSubordinates("Employee5");
+            var subordinates = empHierarchy.GetSubordinates("Employee5");
             Assert.AreEqual(0, subordinates.Count);
         }
 
@@ -55,7 +55,7 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void LookUpTest()
         {
-            Employees emp = company.LookUp("Employee1");
+            Employee emp = empHierarchy.LookUp("Employee1");
             Assert.IsNotNull(emp);
         }
 
@@ -65,7 +65,7 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void Lookup_Wrong_emp_id_Test()
         {
-            Employees emp = company.LookUp("Employee10");
+            Employee emp = empHierarchy.LookUp("Employee10");
             Assert.IsNull(emp);
         }
 
@@ -81,9 +81,9 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void GetBudgetTest()
         {
-            Assert.AreEqual(1800, company.getSalaryBudget("Employee2"));
-            Assert.AreEqual(500, company.getSalaryBudget("Employee3"));
-            Assert.AreEqual(3800, company.getSalaryBudget("Employee1"));
+            Assert.AreEqual(1800, empHierarchy.getSalaryBudget("Employee2"));
+            Assert.AreEqual(500, empHierarchy.getSalaryBudget("Employee3"));
+            Assert.AreEqual(3800, empHierarchy.getSalaryBudget("Employee1"));
         }
 
         
@@ -93,10 +93,10 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void Test_Invalid_Salary_Not_Added()
         {
-            Company h2 = new Company(GetData("../testcases/test2.csv"));
-            Assert.IsFalse(h2.EmployeeList.Contains(new Employees
+            EmployeesHierarchy h2 = new EmployeesHierarchy(GetData("../testcases/test2.csv"));
+            Assert.IsFalse(h2.EmployeeList.Contains(new Employee
             { Id = "Employee5" }));
-            Assert.IsFalse(h2.EmployeeList.Contains(new Employees
+            Assert.IsFalse(h2.EmployeeList.Contains(new Employee
             { Id = "Employee2" }));
 
             Assert.AreEqual(0, h2.EmployeeList.Count);
@@ -108,10 +108,10 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void Test_Manager_More_Than_Three()
         {
-            Company h = new Company(GetData("../testcases/test3.csv"));
-            Assert.IsFalse(h.EmployeeList.Contains(new Employees
+            EmployeesHierarchy h = new EmployeesHierarchy(GetData("../testcases/test3.csv"));
+            Assert.IsFalse(h.EmployeeList.Contains(new Employee
             { Id = "Employee5" }));
-            Assert.IsFalse(h.EmployeeList.Contains(new Employees
+            Assert.IsFalse(h.EmployeeList.Contains(new Employee
             { Id = "Employee1" }));
             Assert.AreEqual(0, h.EmployeeList.Count);
 
@@ -122,8 +122,8 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void Test_Negative_Salary_Check()
         {
-            Company h = new Company(GetData("../testcases/test4.csv"));
-            Assert.IsFalse(h.EmployeeList.Contains(new Employees
+            EmployeesHierarchy h = new EmployeesHierarchy(GetData("../testcases/test4.csv"));
+            Assert.IsFalse(h.EmployeeList.Contains(new Employee
             { Id = "Employee5" }));
             Assert.AreEqual(0, h.EmployeeList.Count);
         }
@@ -135,7 +135,7 @@ namespace UnitTestEmployeeHierarchy
         [TestMethod]
         public void No_Manager_Record()
         {
-            Company h = new Company(GetData("../testcases/test5.csv"));
+            EmployeesHierarchy h = new EmployeesHierarchy(GetData("../testcases/test5.csv"));
             Assert.AreEqual(0, h.EmployeeList.Count);
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EmployeeHierarchyAssessment.ErrorHandling
+namespace EmpHierarchy.ErrorHandling
 {
     class InvalidSalary : Exception
     {
